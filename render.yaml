@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: openalgo
+    runtime: python
+    pythonVersion: 3.12
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 1 -b 0.0.0.0:$PORT --worker-class eventlet -t 120 app:app
+    domains:
+      - whitecollartrades.com
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: "False"
+      - key: FLASK_HOST_IP
+        value: 0.0.0.0
+      - key: FLASK_PORT
+        value: $PORT
